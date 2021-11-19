@@ -1,10 +1,10 @@
-export interface IColor {
+export interface IPoint {
     x: number;
     y: number;
     color?: string;
 }
 
-export class Point implements IColor {
+export class Point implements IPoint {
     public x: number;
     public y: number;
 
