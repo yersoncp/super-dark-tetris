@@ -1,63 +1,14 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useRef } from 'react'
-import { PARAMS } from '../src/params'
+import { Game } from '../src/class/Game'
 
 const Home: NextPage = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  let board: Array<{ color: string, taken: boolean }[]> = []
-  let existingPieces: Array<{ color: string, taken: boolean }[]> = []
-
-  const initialCanvas = (canvas: HTMLCanvasElement) => {
-    canvas.setAttribute('width', `${PARAMS.width}`)
-    canvas.setAttribute('height', `${PARAMS.height}`)
-  }
-
-  const initialPieces = () => {
-    for (let y = 0; y < PARAMS.heightSize(); y++) {
-      board.push([])
-      existingPieces.push([])
-      for (let x = 0; x < PARAMS.widthSize(); x++) {
-        const p = { color: PARAMS.emptyColor, taken: false }
-        board[y].push(p)
-        existingPieces[y].push(p)
-      }
-    }
-    console.log('initialPieces', board)
-  }
-
-  const draw = (ctx: CanvasRenderingContext2D) => {
-    const widthSize = PARAMS.widthSize()
-    const heightSize = PARAMS.heightSize()
-    let x = 0, y = 0;
-    for (const row of board) {
-      x = 0;
-      for (const point of row) {
-        ctx.fillStyle = point.color
-        ctx.fillRect(x, y, widthSize, heightSize)
-        ctx.restore()
-        ctx.strokeStyle = '#fff';
-        ctx.strokeRect(x, y, widthSize, heightSize)
-        x += widthSize
-      }
-      y += heightSize
-    }
-
-    setTimeout(() => {
-      requestAnimationFrame(() => {
-        draw(ctx)
-      })
-    }, 200);
-  }
 
   useEffect(() => {
-    initialPieces()
-    const context = canvasRef.current?.getContext('2d')
-    if (context) {
-      initialCanvas(canvasRef.current as HTMLCanvasElement)
-      draw(context)
-    }
+    const game = new Game({ canvas: canvasRef.current as HTMLCanvasElement })
   }, [])
 
   return (
@@ -68,7 +19,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <canvas ref={canvasRef}></canvas>
+      <div className="game">
+        <canvas ref={canvasRef}></canvas>
+      </div>
 
     </div>
   )
