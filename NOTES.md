@@ -1,6 +1,6 @@
 ## La idea
 
-Tetris es un juego diseñado por Alekséi Pázhitnov en 1984. Básicamente la idea es desarrollar el juego usando NextJS y TypeScrip. Las razones el por qué elegí Tetris es con el fin de poner en práctica mis habilidades de algoritmia y POO sin tanto de tener dependencias de cualquier librería para juegos.
+Tetris es un juego diseñado por Alekséi Pázhitnov en 1984. La idea es desarrollar el juego usando NextJS y TypeScrip. Las razones el por qué elegí Tetris es con el fin de poner en práctica mis habilidades de algoritmia y POO sin tener dependencias de cualquier librería para juegos.
 
 Manos a la obra.
 
