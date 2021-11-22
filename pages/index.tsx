@@ -1,48 +1,55 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useEffect, useRef } from 'react'
+import { PARAMS } from '../src/params'
 
 const Home: NextPage = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const ctx = canvasRef?.current?.getContext('2d')
   let board: any[] = []
 
+  const initalConfig = (canvas: HTMLCanvasElement) => {
+    canvas.setAttribute('width', `${PARAMS.width}`)
+    canvas.setAttribute('height', `${PARAMS.height}` )
+  }
+
   const initialPieces = () => {
-    for (let y = 0; y < 15; y++) {
+    for (let y = 0; y < PARAMS.heightSize(); y++) {
       board.push([])
-      for (let x = 0; x < 10; x++) {
+      for (let x = 0; x < PARAMS.widthSize(); x++) {
         board[y].push({
           color: '#ddd',
           taken: false
         })
       }
     }
-    console.log(board)
   }
 
-  const draw = () => {
-    if (ctx) {
-      let x = 0, y = 0;
-      for (const row of board) {
-        x = 0;
-        for (const point of row) {
-          ctx.fillStyle = point.color
-          ctx.fillRect(x, y, 30, 30)
-          // ctx.restore()
-          ctx.strokeStyle = '#fff';
-          ctx.strokeRect(x, y, 30, 30)
-          x += 30
-        }
-        y += 30
+  const draw = (ctx: CanvasRenderingContext2D) => {
+    const widthSize = PARAMS.widthSize()
+    const heightSize = PARAMS.heightSize()
+    let x = 0, y = 0;
+    for (const row of board) {
+      x = 0;
+      for (const point of row) {
+        ctx.fillStyle = point.color
+        ctx.fillRect(x, y, widthSize, heightSize)
+        ctx.restore()
+        ctx.strokeStyle = '#fff';
+        ctx.strokeRect(x, y, widthSize, heightSize)
+        x += widthSize
       }
-
+      y += heightSize
     }
   }
 
   useEffect(() => {
-    initialPieces()
-    draw()
+    const context = canvasRef.current?.getContext('2d')
+    if (context) {
+      initialPieces()
+      initalConfig(canvasRef.current as HTMLCanvasElement)
+      draw(context)
+    }
   }, [])
 
   return (
@@ -53,7 +60,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <canvas ref={canvasRef} width="300" height="450"></canvas>
+      <canvas ref={canvasRef}></canvas>
 
     </div>
   )
