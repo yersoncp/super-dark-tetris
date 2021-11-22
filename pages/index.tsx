@@ -6,11 +6,11 @@ import { PARAMS } from '../src/params'
 const Home: NextPage = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  let board: any[] = []
+  let board: Array<{ color: string, taken: boolean }[]> = []
 
-  const initalConfig = (canvas: HTMLCanvasElement) => {
+  const initialCanvas = (canvas: HTMLCanvasElement) => {
     canvas.setAttribute('width', `${PARAMS.width}`)
-    canvas.setAttribute('height', `${PARAMS.height}` )
+    canvas.setAttribute('height', `${PARAMS.height}`)
   }
 
   const initialPieces = () => {
@@ -23,6 +23,7 @@ const Home: NextPage = () => {
         })
       }
     }
+    console.log('initialPieces', board)
   }
 
   const draw = (ctx: CanvasRenderingContext2D) => {
@@ -41,13 +42,19 @@ const Home: NextPage = () => {
       }
       y += heightSize
     }
+
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        draw(ctx)
+      })
+    }, 200);
   }
 
   useEffect(() => {
+    initialPieces()
     const context = canvasRef.current?.getContext('2d')
     if (context) {
-      initialPieces()
-      initalConfig(canvasRef.current as HTMLCanvasElement)
+      initialCanvas(canvasRef.current as HTMLCanvasElement)
       draw(context)
     }
   }, [])
