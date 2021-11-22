@@ -1,26 +1,26 @@
 import { Utils } from "../Utils";
-import { IPoint } from "./Point";
+import { Cell, ICell } from "./Cell";
 
 export interface ITetramino {
-    points: IPoint[];
-    rotations: IPoint[][];
+    cells: ICell[];
+    rotations: ICell[][];
     rotationIndex: number;
 }
 
 export class Tetromino implements ITetramino {
 
-    public rotations: IPoint[][];
+    public rotations: ICell[][];
     public rotationIndex: number;
-    public points: IPoint[];
+    public cells: ICell[];
 
-    constructor(rotations: Array<IPoint[]>) {
+    constructor(rotations: Array<ICell[]>) {
         this.rotations = rotations;
         this.rotationIndex = 0;
-        this.points = this.rotations[this.rotationIndex];
+        this.cells = this.rotations[this.rotationIndex];
      
         const color = Utils.getRandomColor();
-        this.rotations.forEach(points => {
-            points.forEach((point: IPoint) => {
+        this.rotations.forEach(cells => {
+            cells.forEach((point: ICell) => {
                 point.color = color;
             });
         });
@@ -31,7 +31,7 @@ export class Tetromino implements ITetramino {
         // this.points = this.rotations[this.rotationIndex];
     }
 
-    getNextRotation(): IPoint[] {
+    getNextRotation(): ICell[] {
         return this.rotations[this.rotationIndex];
         // return this.rotations[(this.rotationIndex + 1) % this.rotations.length];
     }

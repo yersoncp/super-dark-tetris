@@ -1,7 +1,7 @@
 import { PARAMS } from "../params";
 import { Utils } from "../Utils";
 import { Board } from "./Board";
-import { IPoint, Point } from "./Point";
+import { ICell, Cell } from "./Cell";
 import { Tetromino } from "./Tetromino";
 
 export class Game {
@@ -50,7 +50,7 @@ export class Game {
     }
 
     private  overlapCurrentTetrominoOnBoard(): void {
-        for (const point of this.currentTetromino!.points) {
+        for (const point of this.currentTetromino!.cells) {
             this.pieces[point.y + this.globalY][point.x + this.globalX].color = point.color as string;
         }
     }
@@ -77,8 +77,8 @@ export class Game {
     private tetrominoCanMoveDown(): boolean {
         const { currentTetromino } = this
         if (!currentTetromino) return false
-        for (const point of currentTetromino.points) {
-            const newPoint = new Point(point.x, point.y + 1);
+        for (const point of currentTetromino.cells) {
+            const newPoint = new Cell(point.x, point.y + 1);
             if (this.isOutOfBounds(newPoint) || this.isTaken(newPoint)) {
                 return false
             }
@@ -86,20 +86,20 @@ export class Game {
         return true
     }
 
-    private isTaken(point: IPoint): boolean {
+    private isTaken(point: ICell): boolean {
         const absX = point.x + this.globalX
         const absY = point.y + this.globalY
         return this.existingPieces[absY][absX].taken
     }
 
-    private isOutOfBounds(point: IPoint): boolean {
+    private isOutOfBounds(point: ICell): boolean {
         const absX = point.x + this.globalX
         const absY = point.y + this.globalY
         return absX < 0 || absX >= PARAMS.cols || absY < 0 || absY >= PARAMS.rows
     }
 
     private moveTetrominoPointsToExistingPieces() {
-        for (const point of this.currentTetromino!.points) {
+        for (const point of this.currentTetromino!.cells) {
             point.x += this.globalX
             point.y += this.globalY
             this.existingPieces[point.y][point.x] = {
@@ -122,8 +122,8 @@ export class Game {
                  * Línea
                  */
                 return new Tetromino([
-                    [new Point(0, 0), new Point(1, 0), new Point(2, 0), new Point(3, 0)],
-                    [new Point(0, 0), new Point(0, 1), new Point(0, 2), new Point(0, 3)],
+                    [new Cell(0, 0), new Cell(1, 0), new Cell(2, 0), new Cell(3, 0)],
+                    [new Cell(0, 0), new Cell(0, 1), new Cell(0, 2), new Cell(0, 3)],
                 ]);
             case 3:
             case 4:
@@ -134,10 +134,10 @@ export class Game {
                  * La T (tewee)
                  */
                 return new Tetromino([
-                    [new Point(0, 1), new Point(1, 1), new Point(1, 0), new Point(2, 1)],
-                    [new Point(0, 0), new Point(0, 1), new Point(0, 2), new Point(1, 1)],
-                    [new Point(0, 0), new Point(1, 0), new Point(2, 0), new Point(1, 1)],
-                    [new Point(0, 1), new Point(1, 0), new Point(1, 1), new Point(1, 2)],
+                    [new Cell(0, 1), new Cell(1, 1), new Cell(1, 0), new Cell(2, 1)],
+                    [new Cell(0, 0), new Cell(0, 1), new Cell(0, 2), new Cell(1, 1)],
+                    [new Cell(0, 0), new Cell(1, 0), new Cell(2, 0), new Cell(1, 1)],
+                    [new Cell(0, 1), new Cell(1, 0), new Cell(1, 1), new Cell(1, 2)],
                 ]);
                  
         }
