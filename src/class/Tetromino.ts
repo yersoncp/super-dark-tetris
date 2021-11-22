@@ -1,11 +1,17 @@
 import { Utils } from "../Utils";
 import { IPoint } from "./Point";
 
-export class Tetromino {
+export interface ITetramino {
+    points: IPoint[];
+    rotations: IPoint[][];
+    rotationIndex: number;
+}
+
+export class Tetromino implements ITetramino {
 
     public rotations: IPoint[][];
     public rotationIndex: number;
-    private points: IPoint[];
+    public points: IPoint[];
 
     constructor(rotations: Array<IPoint[]>) {
         this.rotations = rotations;
@@ -18,10 +24,6 @@ export class Tetromino {
                 point.color = color;
             });
         });
-    }
-
-    getPoints(): IPoint[] {
-        return this.points;
     }
 
     incrementRotationIndex(): void {

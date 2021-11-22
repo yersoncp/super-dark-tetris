@@ -7,6 +7,7 @@ const Home: NextPage = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   let board: Array<{ color: string, taken: boolean }[]> = []
+  let existingPieces: Array<{ color: string, taken: boolean }[]> = []
 
   const initialCanvas = (canvas: HTMLCanvasElement) => {
     canvas.setAttribute('width', `${PARAMS.width}`)
@@ -16,11 +17,11 @@ const Home: NextPage = () => {
   const initialPieces = () => {
     for (let y = 0; y < PARAMS.heightSize(); y++) {
       board.push([])
+      existingPieces.push([])
       for (let x = 0; x < PARAMS.widthSize(); x++) {
-        board[y].push({
-          color: '#ddd',
-          taken: false
-        })
+        const p = { color: PARAMS.emptyColor, taken: false }
+        board[y].push(p)
+        existingPieces[y].push(p)
       }
     }
     console.log('initialPieces', board)
