@@ -49,6 +49,6 @@ export class Board {
         }
         setTimeout(() => {
             requestAnimationFrame(this.draw.bind(this))
-        }, 1000);
+        }, 500);
     }
 }

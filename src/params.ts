@@ -4,7 +4,7 @@ export const PARAMS = {
   height: 600,
   cols: 10,
   rows: 15,
-  speed: 1000,
+  speed: 800,
   widthSize: () => PARAMS.width / PARAMS.cols,
   heightSize: () => PARAMS.height / PARAMS.rows,
 }

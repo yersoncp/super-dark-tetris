@@ -40,8 +40,67 @@ export class Game {
             this.moveTetrominoPointsToExistingPieces()
             this.chooseTetromino()
             clearInterval(this.intervalId)
+            if (this.isLooser()) {
+                console.log('mainLoop.clearInterval :: LOOSER');
+            }
+            
         }
         this.syncExistingPieces();
+    }
+
+    keyDownHandler(e: number) {
+        console.log('Game.keyDown', e)
+        switch (e) {
+            case 37:
+                this.moveLeft()
+                break;
+            case 38:
+                this.rotate()
+                break;
+            case 39:
+                this.moveRight()
+                break;
+            case 40:
+                // this.moveDown()
+        }
+    }
+
+    private isLooser(): boolean {
+        for (const cell of this.existingPieces[1]) {
+            return cell.taken
+        }
+        return false
+    }
+
+    private rotate(): void {
+        const nextPosition = this.currentTetromino!.getNextRotation()
+        for (const cell of nextPosition) {
+            if (this.isOutOfBounds(cell) || this.isTaken(cell)) {
+                return
+            }
+        }
+        this.currentTetromino!.cells = nextPosition
+        this.currentTetromino!.incrementRotationIndex()
+    }
+
+    private moveLeft() {
+        for (const cell of this.currentTetromino!.cells) {
+            const newCell = new Cell(cell.x - 1, cell.y)
+            if (this.isOutOfBounds(newCell) || this.isTaken(newCell)) {
+                return
+            }
+        }
+        this.globalX--
+    }
+
+    private moveRight() {
+        for (const point of this.currentTetromino!.cells) {
+            const newCell = new Cell(point.x + 1, point.y)
+            if (this.isOutOfBounds(newCell) || this.isTaken(newCell)) {
+                return
+            }
+        }
+        this.globalX++
     }
 
     private syncExistingPieces(): void {
@@ -107,6 +166,7 @@ export class Game {
                 taken: true
             }
         }
+        const a = this.existingPieces.filter(row => row.filter(cell => cell.taken))
         this.initGlobalPosition();
     }
     

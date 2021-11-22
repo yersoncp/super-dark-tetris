@@ -9,6 +9,13 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const game = new Game({ canvas: canvasRef.current as HTMLCanvasElement })
+    const keyDownHandler = (event: KeyboardEvent) => {
+      game.keyDownHandler(event.keyCode)
+    }
+    document.addEventListener('keydown', keyDownHandler)
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler)
+    }
   }, [])
 
   return (
@@ -22,7 +29,6 @@ const Home: NextPage = () => {
       <div className="game">
         <canvas ref={canvasRef}></canvas>
       </div>
-
     </div>
   )
 }
