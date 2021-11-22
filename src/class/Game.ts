@@ -1,6 +1,6 @@
 import { PARAMS } from "../params";
 import { Utils } from "../Utils";
-import { Point } from "./Point";
+import { IPoint, Point } from "./Point";
 import { Tetromino } from "./Tetromino";
 
 export class Game {
@@ -39,12 +39,10 @@ export class Game {
             this.globalY++
         } else {
             console.log('mainLoop.clearInterval');
-            clearInterval(this.intervalId)
+            this.moveTetrominoPointsToExistingPieces()
+            this.chooseTetromino()
+            // clearInterval(this.intervalId)
         }
-        // this.moveFigurePointsToExistingPieces()
-        // setTimeout(() => {
-        //     this.tetrominoCanMoveDown()
-        // }, PARAMS.speed)
         this.syncExistingPieces();
     }
 
@@ -54,12 +52,27 @@ export class Game {
     }
 
     private syncExistingPieces(): void {
+        this.cleanBoardAndOverlapExistingPieces();
         this.overlapCurrentTetrominoOnBoard()
     }
 
     private  overlapCurrentTetrominoOnBoard(): void {
         for (const point of this.currentTetromino!.points) {
             this.board[point.y + this.globalY][point.x + this.globalX].color = point.color as string;
+        }
+    }
+
+    private cleanBoardAndOverlapExistingPieces() {
+        for (let y = 0; y < PARAMS.rows; y++) {
+            for (let x = 0; x < PARAMS.cols; x++) {
+                this.board[y][x] = {
+                    color: PARAMS.emptyColor,
+                    taken: false
+                }
+                if (this.existingPieces[y][x].taken) {
+                    this.board[y][x].color = this.existingPieces[y][x].color
+                }
+            }
         }
     }
 
@@ -85,13 +98,27 @@ export class Game {
         const { currentTetromino } = this
         if (!currentTetromino) return false
         for (const point of currentTetromino.points) {
-            const { x, y } = point
-            if (this.board[y + 1][x].taken) return false
+            const newPoint = new Point(point.x, point.y + 1);
+            if (this.isOutOfBounds(newPoint) || this.isTaken(newPoint)) {
+                return false
+            }
         }
         return true
     }
 
-    private moveFigurePointsToExistingPieces() {
+    private isTaken(point: IPoint): boolean {
+        const absX = point.x + this.globalX
+        const absY = point.y + this.globalY
+        return this.existingPieces[absY][absX].taken
+    }
+
+    private isOutOfBounds(point: IPoint): boolean {
+        const absX = point.x + this.globalX
+        const absY = point.y + this.globalY
+        return absX < 0 || absX >= PARAMS.cols || absY < 0 || absY >= PARAMS.rows
+    }
+
+    private moveTetrominoPointsToExistingPieces() {
         for (const point of this.currentTetromino!.points) {
             point.x += this.globalX
             point.y += this.globalY
