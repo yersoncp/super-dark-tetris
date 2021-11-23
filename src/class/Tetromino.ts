@@ -28,12 +28,10 @@ export class Tetromino implements ITetramino {
 
     incrementRotationIndex(): void {
         this.rotationIndex = (this.rotationIndex + 1) % this.rotations.length;
-        // this.points = this.rotations[this.rotationIndex];
     }
 
     getNextRotation(): ICell[] {
-        return this.rotations[this.rotationIndex];
-        // return this.rotations[(this.rotationIndex + 1) % this.rotations.length];
+        return this.rotations[(this.rotationIndex + 1) % this.rotations.length];
     }
 
 }

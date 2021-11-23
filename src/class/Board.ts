@@ -15,8 +15,8 @@ export class Board {
     }
 
     private initialCanvas() {
-        this.canvas.setAttribute('width', `${PARAMS.width}`)
-        this.canvas.setAttribute('height', `${PARAMS.height}`)
+        this.canvas.setAttribute('width', `${PARAMS.widthSize()}`)
+        this.canvas.setAttribute('height', `${PARAMS.heightSize()}`)
     }
 
     private initialPieces() {
@@ -32,23 +32,22 @@ export class Board {
     }
 
     private draw() {
-        const widthSize = PARAMS.widthSize()
-        const heightSize = PARAMS.heightSize()
+        const size = PARAMS.squareSize;
         let x = 0, y = 0;
         for (const row of this.pieces) {
             x = 0;
             for (const point of row) {
                 this.ctx.fillStyle = point.color
-                this.ctx.fillRect(x, y, widthSize, heightSize)
+                this.ctx.fillRect(x, y, size, size)
                 this.ctx.restore()
                 this.ctx.strokeStyle = PARAMS.strokeColor;
-                this.ctx.strokeRect(x, y, widthSize, heightSize)
-                x += widthSize
+                this.ctx.strokeRect(x, y, size, size)
+                x += size
             }
-            y += heightSize
+            y += size
         }
         setTimeout(() => {
             requestAnimationFrame(this.draw.bind(this))
-        }, 300);
+        }, 18);
     }
 }

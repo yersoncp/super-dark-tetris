@@ -1,11 +1,11 @@
 export const PARAMS = {
   emptyColor: '#222',
   strokeColor: '#333',
-  width: 400,
-  height: 600,
-  cols: 10,
+  deleteRowColor: 'red',
+  squareSize: 40,
+  cols: 8,
   rows: 15,
   speed: 800,
-  widthSize: () => PARAMS.width / PARAMS.cols,
-  heightSize: () => PARAMS.height / PARAMS.rows,
+  widthSize: () => PARAMS.squareSize * PARAMS.cols,
+  heightSize: () => PARAMS.squareSize * PARAMS.rows,
 }

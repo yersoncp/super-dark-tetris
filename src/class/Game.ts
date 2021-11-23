@@ -24,8 +24,8 @@ export class Game {
         this.pieces = this.board.pieces
         this.existingPieces = this.board.existingPieces
         this.initGlobalPosition();
-        this.startGame()
         this.syncExistingPieces()
+        this.startGame()
     }
 
     private startGame() {
@@ -36,20 +36,19 @@ export class Game {
         if (this.tetrominoCanMoveDown()) {
             this.globalY++
         } else {
-            console.log('mainLoop.clearInterval');
-            this.moveTetrominoPointsToExistingPieces()
-            this.chooseTetromino()
+            this.moveTetrominoPointsToExistingPieces();
             if (this.isLooser()) {
-                console.log('mainLoop.clearInterval :: LOOSER');
+                console.warn('>>>>>>>> mainLoop.LOOSER!!!');
                 clearInterval(this.intervalId)
+                return;
             }
-            this.deleteFullRows()
+            this.deleteFullRows();
+            this.chooseTetromino();
         }
         this.syncExistingPieces();
     }
 
     keyDownHandler(e: number) {
-        console.log('Game.keyDown', e)
         switch (e) {
             case 37:
                 this.moveLeft()
@@ -61,15 +60,13 @@ export class Game {
                 this.moveRight()
                 break;
             case 40:
-                // this.moveDown()
+                this.moveDown()
         }
+        this.syncExistingPieces();
     }
 
     private isLooser(): boolean {
-        for (const cell of this.existingPieces[1]) {
-            return cell.taken
-        }
-        return false
+        return this.existingPieces[1].some(cell => cell.taken)
     }
 
     private rotate(): void {
@@ -103,6 +100,12 @@ export class Game {
         this.globalX++
     }
 
+    private moveDown() {
+        if (this.tetrominoCanMoveDown()) {
+            this.globalY++
+        }
+    }
+
     private syncExistingPieces(): void {
         this.cleanBoardAndOverlapExistingPieces();
         this.overlapCurrentTetrominoOnBoard()
@@ -129,24 +132,13 @@ export class Game {
     }
 
     private deleteFullRows() {
-        const a = this.existingPieces.filter((e, x) => {
-
-            const all = e.every(k => k.taken)
-            if (all) {
-                console.log('all', all)
-            }
-
-            return e.filter((r, y) => {
-                return r.taken
-            })
-        })
         const rowsToDelete = this.existingPieces.filter(row => row.every(cell => cell.taken))
-        console.log(1, rowsToDelete);
         if (rowsToDelete.length) {
-            this.existingPieces = this.existingPieces.filter(row => !row.every(cell => cell.taken))
-            this.existingPieces.unshift(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
-            this.existingPieces.push(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
-            this.deleteFullRows()
+            for (const row of rowsToDelete) {
+                this.existingPieces = this.existingPieces.filter(row => !row.every(cell => cell.taken))
+                this.existingPieces.unshift(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
+                this.existingPieces.push(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
+            }
         }
     }
 
