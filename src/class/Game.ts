@@ -39,11 +39,11 @@ export class Game {
             console.log('mainLoop.clearInterval');
             this.moveTetrominoPointsToExistingPieces()
             this.chooseTetromino()
-            clearInterval(this.intervalId)
             if (this.isLooser()) {
                 console.log('mainLoop.clearInterval :: LOOSER');
+                clearInterval(this.intervalId)
             }
-            
+            this.deleteFullRows()
         }
         this.syncExistingPieces();
     }
@@ -128,6 +128,28 @@ export class Game {
         }
     }
 
+    private deleteFullRows() {
+        const a = this.existingPieces.filter((e, x) => {
+
+            const all = e.every(k => k.taken)
+            if (all) {
+                console.log('all', all)
+            }
+
+            return e.filter((r, y) => {
+                return r.taken
+            })
+        })
+        const rowsToDelete = this.existingPieces.filter(row => row.every(cell => cell.taken))
+        console.log(1, rowsToDelete);
+        if (rowsToDelete.length) {
+            this.existingPieces = this.existingPieces.filter(row => !row.every(cell => cell.taken))
+            this.existingPieces.unshift(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
+            this.existingPieces.push(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
+            this.deleteFullRows()
+        }
+    }
+
     private initGlobalPosition() {
         this.globalX = Math.floor(PARAMS.cols / 2) - 1;
         this.globalY = 0;
@@ -166,7 +188,6 @@ export class Game {
                 taken: true
             }
         }
-        const a = this.existingPieces.filter(row => row.filter(cell => cell.taken))
         this.initGlobalPosition();
     }
     

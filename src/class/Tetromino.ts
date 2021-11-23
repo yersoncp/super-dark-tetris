@@ -1,5 +1,5 @@
 import { Utils } from "../Utils";
-import { Cell, ICell } from "./Cell";
+import { ICell } from "./Cell";
 
 export interface ITetramino {
     cells: ICell[];
@@ -13,7 +13,7 @@ export class Tetromino implements ITetramino {
     public rotationIndex: number;
     public cells: ICell[];
 
-    constructor(rotations: Array<ICell[]>) {
+    constructor(rotations: ICell[][]) {
         this.rotations = rotations;
         this.rotationIndex = 0;
         this.cells = this.rotations[this.rotationIndex];

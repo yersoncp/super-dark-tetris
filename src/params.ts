@@ -1,5 +1,6 @@
 export const PARAMS = {
-  emptyColor: '#ddd',
+  emptyColor: '#222',
+  strokeColor: '#333',
   width: 400,
   height: 600,
   cols: 10,

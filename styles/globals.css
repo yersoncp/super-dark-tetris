@@ -15,8 +15,9 @@ a {
   box-sizing: border-box;
 }
 
-
-.game {
+.layout {
+  height: 100vh;
+  background: #111;
   display: grid;
   place-items: center;
 }

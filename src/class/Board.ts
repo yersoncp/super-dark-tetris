@@ -3,8 +3,8 @@ import { PARAMS } from "../params";
 export class Board {
     public canvas: HTMLCanvasElement;
     public ctx: CanvasRenderingContext2D
-    public pieces: Array<{ color: string, taken: boolean }[]> = []
-    public existingPieces: Array<{ color: string, taken: boolean }[]> = []
+    public pieces: { color: string, taken: boolean }[][] = []
+    public existingPieces: { color: string, taken: boolean }[][] = []
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas
@@ -20,10 +20,10 @@ export class Board {
     }
 
     private initialPieces() {
-        for (let y = 0; y < PARAMS.heightSize(); y++) {
+        for (let y = 0; y < PARAMS.rows; y++) {
             this.pieces.push([])
             this.existingPieces.push([])
-            for (let x = 0; x < PARAMS.widthSize(); x++) {
+            for (let x = 0; x < PARAMS.cols; x++) {
                 const p = { color: PARAMS.emptyColor, taken: false }
                 this.pieces[y].push(p)
                 this.existingPieces[y].push(p)
@@ -41,7 +41,7 @@ export class Board {
                 this.ctx.fillStyle = point.color
                 this.ctx.fillRect(x, y, widthSize, heightSize)
                 this.ctx.restore()
-                this.ctx.strokeStyle = '#fff';
+                this.ctx.strokeStyle = PARAMS.strokeColor;
                 this.ctx.strokeRect(x, y, widthSize, heightSize)
                 x += widthSize
             }
@@ -49,6 +49,6 @@ export class Board {
         }
         setTimeout(() => {
             requestAnimationFrame(this.draw.bind(this))
-        }, 500);
+        }, 300);
     }
 }
