@@ -2,12 +2,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+Development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
+```
+
+Test with cypress:
+```bash
+npm run test
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
