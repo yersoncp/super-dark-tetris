@@ -12,11 +12,20 @@ export class Game {
     public globalY: number = 0;
     public intervalId!: any;
 
+    public isPaused: boolean = true;
+
     public board!: Board;
 
     constructor({ canvas }: { canvas: HTMLCanvasElement }) {
         this.board = new Board(canvas)
+        this.initControls()
         this.resetGame()
+    }
+
+    private initControls() {
+        document.addEventListener('keydown', (event) => {
+            this.keyDownHandler(event.keyCode)
+        })
     }
 
     private resetGame() {
@@ -25,14 +34,19 @@ export class Game {
         this.existingPieces = this.board.existingPieces
         this.initGlobalPosition();
         this.syncExistingPieces()
-        this.startGame()
     }
 
-    private startGame() {
-        this.intervalId = setInterval(this.mainLoop.bind(this), PARAMS.speed);
+    pauseOrResumenGame(isPaused: boolean) {
+        this.isPaused = isPaused
+        if (this.isPaused) {
+            clearInterval(this.intervalId)
+        } else {
+            this.intervalId = setInterval(this.mainLoop.bind(this), PARAMS.speed);
+        }
     }
 
     private mainLoop() {
+        if (this.isPaused) return
         if (this.tetrominoCanMoveDown()) {
             this.globalY++
         } else {
@@ -155,6 +169,7 @@ export class Game {
                     this.existingPieces.unshift(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
                     this.tempLog()
                 }, PARAMS.timeDeleteRow);
+                this.syncExistingPieces()
             }
         })
     }

@@ -6,7 +6,7 @@ export const PARAMS = {
   cols: 8,
   rows: 15,
   speed: 800,
-  timeDeleteRow: 10,
+  timeDeleteRow: 250,
   widthSize: () => PARAMS.squareSize * PARAMS.cols,
   heightSize: () => PARAMS.squareSize * PARAMS.rows,
 }
