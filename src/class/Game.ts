@@ -140,6 +140,9 @@ export class Game {
         }
     }
 
+    /**
+     * Elimina las filas completas
+     */
     private deleteFullRows() {
         this.existingPieces.map((row, y) => {
             const isFullRow = row.every(cell => cell.taken)
