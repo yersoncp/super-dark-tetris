@@ -1,11 +1,8 @@
+import { COLORS } from "./params";
+
 export class Utils {
     static getRandomColor() {
-        const colors = [
-            'orange',
-            'red',
-            'purple',
-            'blue'
-        ]
+        const colors = COLORS
         return colors[Utils.getRandomInt(0, colors.length - 1)];
     }
     

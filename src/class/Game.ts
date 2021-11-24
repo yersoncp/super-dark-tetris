@@ -48,6 +48,15 @@ export class Game {
         this.syncExistingPieces();
     }
 
+    /**
+     * Metodo temportal
+     * que muestra estado del tablero
+     */
+    private tempLog(): void {
+        const board = this.existingPieces.map((row, y) => row.map((cell, x) => cell.taken ? `(${x},${y})` : null))
+        console.table(board);
+    }
+
     keyDownHandler(e: number) {
         switch (e) {
             case 37:
@@ -132,14 +141,19 @@ export class Game {
     }
 
     private deleteFullRows() {
-        const rowsToDelete = this.existingPieces.filter(row => row.every(cell => cell.taken))
-        if (rowsToDelete.length) {
-            for (const row of rowsToDelete) {
-                this.existingPieces = this.existingPieces.filter(row => !row.every(cell => cell.taken))
-                this.existingPieces.unshift(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
-                this.existingPieces.push(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
+        this.existingPieces.map((row, y) => {
+            const isFullRow = row.every(cell => cell.taken)
+            if (isFullRow) {
+                for (const cell of this.existingPieces[y]) {
+                    cell.color = PARAMS.deleteRowColor
+                }
+                setTimeout(() => {
+                    this.existingPieces = this.existingPieces.filter(row => !row.every(cell => cell.taken))
+                    this.existingPieces.unshift(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
+                    this.tempLog()
+                }, PARAMS.timeDeleteRow);
             }
-        }
+        })
     }
 
     private initGlobalPosition() {
@@ -190,6 +204,12 @@ export class Game {
     private getTetromino() {
         switch (Utils.getRandomInt(1, 7)) {
             case 1:
+                /**
+                 * Cuadrado
+                 */
+                return new Tetromino([
+                    [new Cell(0, 0), new Cell(0, 1), new Cell(1, 0), new Cell(1, 1)],
+                ])
             case 2:
                 /**
                  * Línea
@@ -206,6 +226,10 @@ export class Game {
                 /**
                  * La T (tewee)
                  */
+                return new Tetromino([
+                    [new Cell(0, 0), new Cell(1, 0), new Cell(2, 0), new Cell(3, 0)],
+                    [new Cell(0, 0), new Cell(0, 1), new Cell(0, 2), new Cell(0, 3)],
+                ]);
                 return new Tetromino([
                     [new Cell(0, 1), new Cell(1, 1), new Cell(1, 0), new Cell(2, 1)],
                     [new Cell(0, 0), new Cell(0, 1), new Cell(0, 2), new Cell(1, 1)],
