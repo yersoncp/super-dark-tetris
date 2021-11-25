@@ -17,7 +17,7 @@ a {
 
 .layout {
   height: 100vh;
-  background: #111;
+  background: #000;
   display: grid;
   place-items: center;
 }
@@ -33,7 +33,7 @@ a {
   margin: 0 .2rem;
 }
 
-.status {
+.paused {
   border: none;
   background: #df4d29;
   box-shadow: 2px 2px 10px #df4d29;

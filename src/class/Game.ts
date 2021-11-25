@@ -12,7 +12,7 @@ export class Game {
     public globalY: number = 0;
     public intervalId!: any;
 
-    public isPaused: boolean = false;
+    public canPlay: boolean = true;
 
     public board!: Board;
 
@@ -25,15 +25,15 @@ export class Game {
     private initControls() {
         document.addEventListener('keydown', (event) => {
             if(event.keyCode === 13) {
-                this.isPaused = !this.isPaused
-                document.querySelector('#pauseLabel')!.className = this.isPaused ? 'status' : 'hidden'
-                if(this.isPaused) {
+                this.canPlay = !this.canPlay
+                document.querySelector('#pauseLabel')!.className = this.canPlay ? 'hidden' : 'paused'
+                if(this.canPlay) {
                     this.pauseGame()
                 } else {
                     this.startGame()
                 }
             }
-            if (this.isPaused) return
+            if (!this.canPlay) return
             this.keyDownHandler(event.keyCode)
         })
     }
@@ -56,7 +56,7 @@ export class Game {
     }
 
     private mainLoop() {
-        if (this.isPaused) return
+        if (!this.canPlay) return
         if (this.tetrominoCanMoveDown()) {
             this.globalY++
         } else {

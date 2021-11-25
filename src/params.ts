@@ -1,6 +1,6 @@
 export const PARAMS = {
-  emptyColor: '#222',
-  strokeColor: '#333',
+  emptyColor: '#111',
+  strokeColor: '#222',
   deleteRowColor: 'red',
   squareSize: 40,
   cols: 8,
@@ -12,8 +12,11 @@ export const PARAMS = {
 }
 
 export const COLORS = [
-    'orange',
-    'purple',
-    'blue',
-    'yellow'
+    '#4E9F3D',
+    '#700B97',
+    '#864879',
+    '#B42B51',
+    '#B85C38',
+    '#1597BB',
+    '#3282B8',
 ]
