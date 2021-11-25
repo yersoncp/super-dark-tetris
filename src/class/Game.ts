@@ -23,17 +23,14 @@ export class Game {
     }
 
     private initControls() {
-        const pauseLabel = document.querySelector('#pauseLabel');
-        pauseLabel!.className = this.isPaused ? 'status' : 'hidden'
-
         document.addEventListener('keydown', (event) => {
             if(event.keyCode === 13) {
                 this.isPaused = !this.isPaused
-                pauseLabel!.className = this.isPaused ? 'status' : 'hidden'
+                document.querySelector('#pauseLabel')!.className = this.isPaused ? 'status' : 'hidden'
                 if(this.isPaused) {
                     this.pauseGame()
                 } else {
-                    this.resumeGame()
+                    this.startGame()
                 }
             }
             if (this.isPaused) return
@@ -45,15 +42,16 @@ export class Game {
         this.chooseTetromino()
         this.pieces = this.board.pieces
         this.existingPieces = this.board.existingPieces
-        this.initGlobalPosition();
+        this.initGlobalPosition()
         this.syncExistingPieces()
+        this.startGame()
     }
 
     private pauseGame(): void {
         clearInterval(this.intervalId)
     }
 
-    private resumeGame(): void {
+    private startGame(): void {
         this.intervalId = setInterval(this.mainLoop.bind(this), PARAMS.speed);
     }
 

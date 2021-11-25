@@ -28,7 +28,9 @@ a {
 }
 
 .controls {
+  text-align: right;
   height: 40px;
+  margin: 0 .2rem;
 }
 
 .status {
