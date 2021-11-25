@@ -12,7 +12,7 @@ export class Game {
     public globalY: number = 0;
     public intervalId!: any;
 
-    public isPaused: boolean = true;
+    public isPaused: boolean = false;
 
     public board!: Board;
 
@@ -23,7 +23,20 @@ export class Game {
     }
 
     private initControls() {
+        const pauseLabel = document.querySelector('#pauseLabel');
+        pauseLabel!.className = this.isPaused ? 'status' : 'hidden'
+
         document.addEventListener('keydown', (event) => {
+            if(event.keyCode === 13) {
+                this.isPaused = !this.isPaused
+                pauseLabel!.className = this.isPaused ? 'status' : 'hidden'
+                if(this.isPaused) {
+                    this.pauseGame()
+                } else {
+                    this.resumeGame()
+                }
+            }
+            if (this.isPaused) return
             this.keyDownHandler(event.keyCode)
         })
     }
@@ -36,13 +49,12 @@ export class Game {
         this.syncExistingPieces()
     }
 
-    pauseOrResumenGame(isPaused: boolean) {
-        this.isPaused = isPaused
-        if (this.isPaused) {
-            clearInterval(this.intervalId)
-        } else {
-            this.intervalId = setInterval(this.mainLoop.bind(this), PARAMS.speed);
-        }
+    private pauseGame(): void {
+        clearInterval(this.intervalId)
+    }
+
+    private resumeGame(): void {
+        this.intervalId = setInterval(this.mainLoop.bind(this), PARAMS.speed);
     }
 
     private mainLoop() {
@@ -169,7 +181,6 @@ export class Game {
                     this.existingPieces.unshift(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
                     this.tempLog()
                 }, PARAMS.timeDeleteRow);
-                this.syncExistingPieces()
             }
         })
     }

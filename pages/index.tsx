@@ -7,7 +7,6 @@ const Home: NextPage = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [game, setGame] = useState<Game | null>(null)
-  const [isPaused, setIsPaused] = useState(true)
 
   console.warn('>>>> Render page');
 
@@ -17,13 +16,6 @@ const Home: NextPage = () => {
     console.log('>>>> Game created');
   }, [])
 
-  const isPausedHandler = useCallback(() => {
-    if (game) {
-      setIsPaused(!isPaused)
-      game.pauseOrResumenGame(isPaused)
-    }
-  }, [game, isPaused])
-
   return (
     <div className="layout">
       <Head>
@@ -32,12 +24,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="control">
-        <button type="button" onClick={() => isPausedHandler()}>{ isPaused ? 'Play' : 'Pause' }</button>
-      </div>
-
       <div>
-        <canvas ref={canvasRef}></canvas>
+        <div className="controls">
+          <label id="pauseLabel" className="status">PAUSED</label>
+        </div>
+        <div className="board">
+          <canvas ref={canvasRef}></canvas>
+        </div>
       </div>
     </div>
   )
