@@ -14,6 +14,9 @@ export class Game {
 
     public canPlay: boolean = true;
 
+    private score: number = 0;
+    private score$!: HTMLSpanElement;
+
     public board!: Board;
 
     constructor({ canvas }: { canvas: HTMLCanvasElement }) {
@@ -23,6 +26,7 @@ export class Game {
     }
 
     private initControls() {
+        this.score$ = document.querySelector('#score') as HTMLSpanElement;
         document.addEventListener('keydown', (event) => {
             if(event.keyCode === 13) {
                 this.canPlay = !this.canPlay
@@ -55,10 +59,16 @@ export class Game {
         this.intervalId = setInterval(this.mainLoop.bind(this), PARAMS.speed);
     }
 
+    private addScore(n: number) {
+        this.score += n;
+        this.score$.textContent = `${this.score}`;
+    }
+
     private mainLoop() {
         if (!this.canPlay) return
         if (this.tetrominoCanMoveDown()) {
             this.globalY++
+            this.addScore(1)
         } else {
             this.moveTetrominoPointsToExistingPieces();
             if (this.isLooser()) {
@@ -136,6 +146,7 @@ export class Game {
     private moveDown() {
         if (this.tetrominoCanMoveDown()) {
             this.globalY++
+            this.addScore(1)
         }
     }
 
@@ -177,6 +188,7 @@ export class Game {
                 setTimeout(() => {
                     this.existingPieces = this.existingPieces.filter(row => !row.every(cell => cell.taken))
                     this.existingPieces.unshift(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
+                    this.addScore(PARAMS.scorePerSquare * PARAMS.cols)
                     this.tempLog()
                 }, PARAMS.timeDeleteRow);
             }

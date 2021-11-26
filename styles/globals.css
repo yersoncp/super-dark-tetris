@@ -28,9 +28,11 @@ a {
 }
 
 .controls {
-  text-align: right;
-  height: 40px;
   margin: 0 .2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 38px;
 }
 
 .paused {
@@ -48,4 +50,14 @@ a {
 
 .hidden {
   visibility: hidden;
+}
+
+.text {
+  color: #666;
+}
+
+.scoreLabel {
+  color: #fff;
+  font-size: 13px;
+  text-transform: uppercase;
 }

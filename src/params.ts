@@ -1,7 +1,7 @@
 export const PARAMS = {
-  emptyColor: '#111',
-  strokeColor: '#222',
-  deleteRowColor: 'red',
+  emptyColor: '#202022',
+  strokeColor: '#313136',
+  deleteRowColor: '#607d8b',
   squareSize: 40,
   cols: 8,
   rows: 15,
@@ -9,6 +9,7 @@ export const PARAMS = {
   timeDeleteRow: 250,
   widthSize: () => PARAMS.squareSize * PARAMS.cols,
   heightSize: () => PARAMS.squareSize * PARAMS.rows,
+  scorePerSquare: 10,
 }
 
 export const COLORS = [

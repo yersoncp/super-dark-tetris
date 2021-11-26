@@ -26,6 +26,10 @@ const Home: NextPage = () => {
 
       <div>
         <div className="controls">
+          <label className="scoreLabel">
+              <span className="text">Puntos: </span>
+              <span id="score">0</span>
+          </label>
           <label id="pauseLabel" className="hidden">PAUSED</label>
         </div>
         <div className="board">
