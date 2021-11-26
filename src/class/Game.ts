@@ -4,10 +4,15 @@ import { Board } from "./Board";
 import { ICell, Cell } from "./Cell";
 import { Tetromino } from "./Tetromino";
 
+type Piece = {
+    color: string;
+    taken: boolean;
+};
+
 export class Game {
     public currentTetromino: Tetromino | undefined;
-    public pieces: Array<{ color: string, taken: boolean }[]> = []
-    public existingPieces: Array<{ color: string, taken: boolean }[]> = []
+    public pieces: Piece[][] = []
+    public existingPieces: Piece[][] = []
     public globalX: number = 0;
     public globalY: number = 0;
     public intervalId!: any;
