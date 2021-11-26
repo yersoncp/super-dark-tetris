@@ -16,6 +16,7 @@ export class Game {
 
     private score: number = 0;
     private score$!: HTMLSpanElement;
+    private speed: number = PARAMS.speed;
 
     public board!: Board;
 
@@ -56,7 +57,7 @@ export class Game {
     }
 
     private startGame(): void {
-        this.intervalId = setInterval(this.mainLoop.bind(this), PARAMS.speed);
+        this.intervalId = setInterval(this.mainLoop.bind(this), this.speed);
     }
 
     private addScore(n: number) {
