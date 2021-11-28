@@ -34,3 +34,6 @@ https://super-dark-tetris.vercel.app/
 
 ## Contribuciones
 ¿Quieres apoyar o sugerir cambios al código? Envíame un pull request.
+
+## Recursos
+* https://tailwindcolor.com/
