@@ -2,7 +2,7 @@ import { Utils } from "../../utils/Utils";
 import { Cell } from "../cell/Cell";
 import { Tetromino } from "./Tetromino";
 
-enum TetrominoType {
+export enum TetrominoType {
     I = 'I',
     J = 'J',
     L = 'L',
@@ -24,7 +24,7 @@ export class TetrominoFactory {
         return tetrominoTypes[Utils.getRandomInt(0, tetrominoTypes.length - 1)];
     }
 
-    private static create(type: TetrominoType): Tetromino {
+    public static create(type: TetrominoType): Tetromino {
         switch (type) {
             case TetrominoType.I:
                 return new Tetromino([
@@ -67,8 +67,6 @@ export class TetrominoFactory {
                     [new Cell(0, 0), new Cell(0, 1), new Cell(1, 1), new Cell(1, 2)],
                     [new Cell(0, 1), new Cell(1, 0), new Cell(1, 1), new Cell(2, 0)],
                 ]);
-            default:
-                throw new Error('Invalid TetrominoType');
         }
     }
 }
