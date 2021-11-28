@@ -1,19 +1,17 @@
-export const PARAMS = {
-  emptyColor: '#202022',
-  strokeColor: '#313136',
-  deleteRowColor: '#607d8b',
-  squareSize: 40,
-  cols: 8,
-  rows: 15,
-  speed: 800,
-  speedDecrement: 50,
-  timeDeleteRow: 250,
-  widthSize: () => PARAMS.squareSize * PARAMS.cols,
-  heightSize: () => PARAMS.squareSize * PARAMS.rows,
-  scorePerSquare: 10,
-}
-
-export const COLORS = [
+export class PARAMS {
+  static readonly emptyColor: string = '#202022'
+  static readonly strokeColor: string = '#313136'
+  static readonly deleteRowColor: string = '#607d8b'
+  static readonly squareSize: number = 40
+  static readonly cols: number = 8
+  static readonly rows: number = 15
+  static readonly speed: number = 800
+  static readonly speedDecrement: number = 50
+  static readonly timeDeleteRow: number = 250
+  static readonly widthSize: number = this.squareSize * this.cols
+  static readonly heightSize: number = this.squareSize * this.rows
+  static readonly scorePerSquare: number = 10
+  static readonly colors = [
     '#4E9F3D',
     '#700B97',
     '#864879',
@@ -21,4 +19,5 @@ export const COLORS = [
     '#B85C38',
     '#1597BB',
     '#3282B8',
-]
+  ]
+}

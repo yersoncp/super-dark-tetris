@@ -1,8 +1,8 @@
-import { COLORS } from "./params";
+import { PARAMS } from "./params";
 
 export class Utils {
     static getRandomColor() {
-        const colors = COLORS
+        const colors = PARAMS.colors
         return colors[Utils.getRandomInt(0, colors.length - 1)];
     }
     

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import {useEffect, useRef, useState } from 'react'
 import { Game } from '../src/class/Game'
 
 const Home: NextPage = () => {

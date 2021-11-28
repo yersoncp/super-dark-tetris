@@ -15,8 +15,8 @@ export class Board {
     }
 
     private initialCanvas() {
-        this.canvas.setAttribute('width', `${PARAMS.widthSize()}`)
-        this.canvas.setAttribute('height', `${PARAMS.heightSize()}`)
+        this.canvas.setAttribute('width', `${PARAMS.widthSize}`)
+        this.canvas.setAttribute('height', `${PARAMS.heightSize}`)
     }
 
     private initialPieces() {
