@@ -102,7 +102,7 @@ export class Game {
         console.table(board);
     }
 
-    keyDownHandler(e: number) {
+    keyDownHandler(e: number): void {
         switch (e) {
             case 37:
                 this.moveLeft()
@@ -124,18 +124,18 @@ export class Game {
     }
 
     private rotate(): void {
-        const nextPosition = this.currentTetromino!.getNextRotation()
+        const nextPosition = this.currentTetromino.getNextRotation()
         for (const cell of nextPosition) {
             if (this.isOutOfBounds(cell) || this.isTaken(cell)) {
                 return
             }
         }
-        this.currentTetromino!.cells = nextPosition
-        this.currentTetromino!.incrementRotationIndex()
+        this.currentTetromino.cells = nextPosition
+        this.currentTetromino.incrementRotationIndex()
     }
 
     private moveLeft() {
-        for (const cell of this.currentTetromino!.cells) {
+        for (const cell of this.currentTetromino.cells) {
             const newCell = new Cell(cell.x - 1, cell.y)
             if (this.isOutOfBounds(newCell) || this.isTaken(newCell)) {
                 return
@@ -145,7 +145,7 @@ export class Game {
     }
 
     private moveRight() {
-        for (const point of this.currentTetromino!.cells) {
+        for (const point of this.currentTetromino.cells) {
             const newCell = new Cell(point.x + 1, point.y)
             if (this.isOutOfBounds(newCell) || this.isTaken(newCell)) {
                 return
@@ -167,7 +167,7 @@ export class Game {
     }
 
     private  overlapCurrentTetrominoOnBoard(): void {
-        for (const point of this.currentTetromino!.cells) {
+        for (const point of this.currentTetromino.cells) {
             this.pieces[point.y + this.globalY][point.x + this.globalX].color = point.color as string;
         }
     }
@@ -236,7 +236,7 @@ export class Game {
     }
 
     private moveTetrominoPointsToExistingPieces() {
-        for (const point of this.currentTetromino!.cells) {
+        for (const point of this.currentTetromino.cells) {
             point.x += this.globalX
             point.y += this.globalY
             this.existingPieces[point.y][point.x] = {
