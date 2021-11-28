@@ -1,4 +1,4 @@
-import { PARAMS } from "../params";
+import { PARAMS } from "../Params";
 import { Utils } from "../Utils";
 import { Board } from "./Board";
 import { ICell, Cell } from "./Cell";

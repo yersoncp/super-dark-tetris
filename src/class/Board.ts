@@ -1,4 +1,4 @@
-import { PARAMS } from "../params";
+import { PARAMS } from "../Params";
 
 export class Board {
     public canvas: HTMLCanvasElement;
