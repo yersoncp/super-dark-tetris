@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import {useEffect, useRef, useState } from 'react'
-import { Game } from '../src/class/Game'
+import { Game } from '../src/class/game/Game'
 
 const Home: NextPage = () => {
 

@@ -6,6 +6,7 @@
     "start": "next start",
     "lint": "eslint . --ext ts --ext tsx --ext js",
     "test": "jest --coverage=true",
+    "test:watch": "jest --watch --coverage=true",
     "test-all": "npm run lint && npm run test"
   },
   "husky": {

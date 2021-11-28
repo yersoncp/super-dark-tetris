@@ -1,5 +1,5 @@
-import { Utils } from "../Utils";
-import { ICell } from "./Cell";
+import { Utils } from "../../utils/Utils";
+import { ICell } from "../cell/Cell";
 
 export interface ITetramino {
     cells: ICell[];
