@@ -6,11 +6,11 @@ import { Game } from '../src/class/Game'
 const Home: NextPage = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [game, setGame] = useState<Game | null>(null)
 
   useEffect(() => {
     const gameInstance = new Game({ canvas: canvasRef.current as HTMLCanvasElement })
-    game.pieces
     setGame(gameInstance)
   }, [])
 

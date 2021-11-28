@@ -4,15 +4,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc --pretty --noEmit",
     "lint": "eslint . --ext ts --ext tsx --ext js",
     "test": "jest --coverage=true",
-    "test-all": "npm run lint && npm run type-check && npm run test"
+    "test-all": "npm run lint && npm run test"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run type-check"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
