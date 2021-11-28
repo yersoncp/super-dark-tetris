@@ -1,4 +1,4 @@
-import { PARAMS } from "../Params";
+import { Config } from "../Config";
 
 export class Board {
     public canvas: HTMLCanvasElement;
@@ -15,16 +15,16 @@ export class Board {
     }
 
     private initialCanvas() {
-        this.canvas.setAttribute('width', `${PARAMS.widthSize}`)
-        this.canvas.setAttribute('height', `${PARAMS.heightSize}`)
+        this.canvas.setAttribute('width', `${Config.widthSize}`)
+        this.canvas.setAttribute('height', `${Config.heightSize}`)
     }
 
     private initialPieces() {
-        for (let y = 0; y < PARAMS.rows; y++) {
+        for (let y = 0; y < Config.rows; y++) {
             this.pieces.push([])
             this.existingPieces.push([])
-            for (let x = 0; x < PARAMS.cols; x++) {
-                const p = { color: PARAMS.emptyColor, taken: false }
+            for (let x = 0; x < Config.cols; x++) {
+                const p = { color: Config.emptyColor, taken: false }
                 this.pieces[y].push(p)
                 this.existingPieces[y].push(p)
             }
@@ -32,7 +32,7 @@ export class Board {
     }
 
     private draw() {
-        const size = PARAMS.squareSize;
+        const size = Config.squareSize;
         let x = 0, y = 0;
         for (const row of this.pieces) {
             x = 0;
@@ -40,7 +40,7 @@ export class Board {
                 this.ctx.fillStyle = point.color
                 this.ctx.fillRect(x, y, size, size)
                 this.ctx.restore()
-                this.ctx.strokeStyle = PARAMS.strokeColor;
+                this.ctx.strokeStyle = Config.strokeColor;
                 this.ctx.strokeRect(x, y, size, size)
                 x += size
             }

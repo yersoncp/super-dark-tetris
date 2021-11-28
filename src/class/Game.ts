@@ -1,4 +1,4 @@
-import { PARAMS } from "../Params";
+import { Config } from "../Config";
 import { Utils } from "../Utils";
 import { Board } from "./Board";
 import { ICell, Cell } from "./Cell";
@@ -21,7 +21,7 @@ export class Game {
 
     private score: number;
     private score$!: HTMLSpanElement;
-    private speed: number = PARAMS.speed;
+    private speed: number = Config.speed;
 
     public board!: Board;
 
@@ -173,10 +173,10 @@ export class Game {
     }
 
     private cleanBoardAndOverlapExistingPieces() {
-        for (let y = 0; y < PARAMS.rows; y++) {
-            for (let x = 0; x < PARAMS.cols; x++) {
+        for (let y = 0; y < Config.rows; y++) {
+            for (let x = 0; x < Config.cols; x++) {
                 this.pieces[y][x] = {
-                    color: PARAMS.emptyColor,
+                    color: Config.emptyColor,
                     taken: false
                 }
                 if (this.existingPieces[y][x].taken) {
@@ -194,20 +194,20 @@ export class Game {
             const isFullRow = row.every(cell => cell.taken)
             if (isFullRow) {
                 for (const cell of this.existingPieces[y]) {
-                    cell.color = PARAMS.deleteRowColor
+                    cell.color = Config.deleteRowColor
                 }
                 setTimeout(() => {
                     this.existingPieces = this.existingPieces.filter(row => !row.every(cell => cell.taken))
-                    this.existingPieces.unshift(Array(PARAMS.cols).fill({ color: PARAMS.emptyColor, taken: false }))
-                    this.addScore(PARAMS.scorePerSquare * PARAMS.cols)
+                    this.existingPieces.unshift(Array(Config.cols).fill({ color: Config.emptyColor, taken: false }))
+                    this.addScore(Config.scorePerSquare * Config.cols)
                     this.tempLog()
-                }, PARAMS.timeDeleteRow);
+                }, Config.timeDeleteRow);
             }
         })
     }
 
     private initGlobalPosition() {
-        this.globalX = Math.floor(PARAMS.cols / 2) - 1;
+        this.globalX = Math.floor(Config.cols / 2) - 1;
         this.globalY = 0;
     }
     
@@ -232,7 +232,7 @@ export class Game {
     private isOutOfBounds(point: ICell): boolean {
         const absX = point.x + this.globalX
         const absY = point.y + this.globalY
-        return absX < 0 || absX >= PARAMS.cols || absY < 0 || absY >= PARAMS.rows
+        return absX < 0 || absX >= Config.cols || absY < 0 || absY >= Config.rows
     }
 
     private moveTetrominoPointsToExistingPieces() {
