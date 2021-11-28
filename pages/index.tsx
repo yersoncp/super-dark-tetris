@@ -8,12 +8,10 @@ const Home: NextPage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [game, setGame] = useState<Game | null>(null)
 
-  console.warn('>>>> Render page');
-
   useEffect(() => {
-    const game = new Game({ canvas: canvasRef.current as HTMLCanvasElement })
-    setGame(game)
-    console.log('>>>> Game created');
+    const gameInstance = new Game({ canvas: canvasRef.current as HTMLCanvasElement })
+    game.pieces
+    setGame(gameInstance)
   }, [])
 
   return (

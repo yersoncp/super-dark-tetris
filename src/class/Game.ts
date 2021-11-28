@@ -13,13 +13,13 @@ export class Game {
     public currentTetromino: Tetromino | undefined;
     public pieces: Piece[][] = []
     public existingPieces: Piece[][] = []
-    public globalX: number = 0;
-    public globalY: number = 0;
+    public globalX: number;
+    public globalY: number;
     public intervalId!: any;
 
-    public canPlay: boolean = true;
+    public canPlay: boolean;
 
-    private score: number = 0;
+    private score: number;
     private score$!: HTMLSpanElement;
     private speed: number = PARAMS.speed;
 
@@ -27,6 +27,10 @@ export class Game {
 
     constructor({ canvas }: { canvas: HTMLCanvasElement }) {
         this.board = new Board(canvas)
+        this.globalX = 0;
+        this.globalY = 0;
+        this.score = 0;
+        this.canPlay = true;
         this.initControls()
         this.resetGame()
     }
@@ -36,7 +40,7 @@ export class Game {
         document.addEventListener('keydown', (event) => {
             if(event.keyCode === 13) {
                 this.canPlay = !this.canPlay
-                document.querySelector('#pauseLabel')!.className = this.canPlay ? 'hidden' : 'paused'
+                document.querySelector('#pauseLabel').className = this.canPlay ? 'hidden' : 'paused'
                 if(this.canPlay) {
                     this.pauseGame()
                 } else {
@@ -94,6 +98,7 @@ export class Game {
      */
     private tempLog(): void {
         const board = this.existingPieces.map((row, y) => row.map((cell, x) => cell.taken ? `(${x},${y})` : null))
+        // eslint-disable-next-line no-console
         console.table(board);
     }
 
