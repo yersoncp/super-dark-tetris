@@ -1,7 +1,7 @@
 export class Config {
     static readonly emptyColor: string = '#202022'
     static readonly strokeColor: string = '#313136'
-    static readonly deleteRowColor: string = '#607d8b'
+    static readonly deleteRowColor: string = '#B91C1C'
     static readonly squareSize: number = 40
     static readonly cols: number = 8
     static readonly rows: number = 15
@@ -12,13 +12,15 @@ export class Config {
     static readonly heightSize: number = this.squareSize * this.rows
     static readonly scorePerSquare: number = 10
     static readonly colors = [
-      '#4E9F3D',
-      '#700B97',
-      '#864879',
-      '#B42B51',
-      '#B85C38',
-      '#1597BB',
-      '#3282B8',
+      '#EF4444',
+      '#F97316',
+      '#F59E0B',
+      '#22C55E',
+      '#06B6D4',
+      '#6366F1',
+      '#A855F7',
+      '#EC4899',
+      '#64748B',
     ]
   }
   

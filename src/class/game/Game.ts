@@ -1,8 +1,8 @@
 import { Config } from "../../Config";
-import { Utils } from "../../utils/Utils";
 import { Board } from "../board/Board";
 import { ICell, Cell } from "../cell/Cell";
 import { Tetromino } from "../tetramino/Tetromino";
+import { TetrominoFactory } from "../tetramino/TetrominoFactory";
 
 type Piece = {
     color: string;
@@ -251,43 +251,8 @@ export class Game {
         this.currentTetromino = this.getTetromino()
     }
 
-    private getTetromino() {
-        switch (Utils.getRandomInt(1, 7)) {
-            case 1:
-                /**
-                 * Cuadrado
-                 */
-                return new Tetromino([
-                    [new Cell(0, 0), new Cell(0, 1), new Cell(1, 0), new Cell(1, 1)],
-                ])
-            case 2:
-                /**
-                 * Línea
-                 */
-                return new Tetromino([
-                    [new Cell(0, 0), new Cell(1, 0), new Cell(2, 0), new Cell(3, 0)],
-                    [new Cell(0, 0), new Cell(0, 1), new Cell(0, 2), new Cell(0, 3)],
-                ]);
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-                /**
-                 * La T (tewee)
-                 */
-                return new Tetromino([
-                    [new Cell(0, 0), new Cell(1, 0), new Cell(2, 0), new Cell(3, 0)],
-                    [new Cell(0, 0), new Cell(0, 1), new Cell(0, 2), new Cell(0, 3)],
-                ]);
-                return new Tetromino([
-                    [new Cell(0, 1), new Cell(1, 1), new Cell(1, 0), new Cell(2, 1)],
-                    [new Cell(0, 0), new Cell(0, 1), new Cell(0, 2), new Cell(1, 1)],
-                    [new Cell(0, 0), new Cell(1, 0), new Cell(2, 0), new Cell(1, 1)],
-                    [new Cell(0, 1), new Cell(1, 0), new Cell(1, 1), new Cell(1, 2)],
-                ]);
-                 
-        }
+    private getTetromino(): Tetromino {
+        return TetrominoFactory.createRandom();
     }
 
 }
