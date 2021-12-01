@@ -10,20 +10,19 @@ type Piece = {
 };
 
 export class Game {
-    public currentTetromino: Tetromino | undefined;
-    public pieces: Piece[][] = []
-    public existingPieces: Piece[][] = []
-    public globalX: number;
-    public globalY: number;
-    public intervalId!: any;
+    private currentTetromino: Tetromino;
+    private pieces: Piece[][] = []
+    private existingPieces: Piece[][] = []
+    private globalX: number;
+    private globalY: number;
+    private intervalId!: any;
 
-    public canPlay: boolean;
+    private canPlay: boolean;
 
-    private score: number;
-    private score$!: HTMLSpanElement;
+    private score$: HTMLSpanElement;
     private speed: number = Config.speed;
 
-    public board!: Board;
+    private board!: Board;
 
     constructor(canvas: HTMLCanvasElement) {
         this.board = new Board(canvas)
@@ -36,12 +35,12 @@ export class Game {
      * Inicializa los controles
      */
     private initControls() {
-        const puaseLabel$ = document.querySelector('#pauseLabel') as HTMLLabelElement
+        const pauseLabel$ = document.querySelector('#pauseLabel') as HTMLLabelElement
         this.score$ = document.querySelector('#score') as HTMLSpanElement;
         document.addEventListener('keydown', (event) => {
             if(event.keyCode === 13) {
                 this.canPlay = !this.canPlay
-                puaseLabel$.className = this.canPlay ? 'hidden' : 'paused'
+                pauseLabel$.className = this.canPlay ? 'hidden' : 'paused'
                 this.canPlay ? this.startGame() : this.pauseGame()
             }
             if (!this.canPlay) return
@@ -53,8 +52,7 @@ export class Game {
      * Inicializa los valores por defecto del juego
      */
     private initGame() {
-        this.score = 0
-        this.score$.textContent = `${this.score}`
+        this.score$.textContent = `${0}`
         this.pieces = this.board.pieces
         this.existingPieces = this.board.existingPieces
         this.chooseTetromino()
@@ -72,8 +70,7 @@ export class Game {
     }
 
     private addScore(n: number) {
-        this.score += n;
-        this.score$.textContent = `${this.score}`;
+        this.score$.textContent = `${parseInt(this.score$.textContent) + n}`
     }
 
     private mainLoop() {
