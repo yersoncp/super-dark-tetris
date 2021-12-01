@@ -58,6 +58,12 @@ export class Game {
         this.chooseTetromino()
         this.initGlobalPosition()
         this.syncExistingPieces()
+        this.canPlay = true
+    }
+    
+    private initGlobalPosition() {
+        this.globalX = Math.floor(Config.cols / 2) - 1;
+        this.globalY = 0;
     }
 
     private pauseGame(): void {
@@ -65,7 +71,6 @@ export class Game {
     }
 
     private startGame(): void {
-        this.canPlay = true;
         this.intervalId = setInterval(this.mainLoop.bind(this), this.speed);
     }
 
@@ -73,35 +78,7 @@ export class Game {
         this.score$.textContent = `${parseInt(this.score$.textContent) + n}`
     }
 
-    private mainLoop() {
-        if (!this.canPlay) return
-        if (this.tetrominoCanMoveDown()) {
-            this.globalY++
-            this.addScore(1)
-        } else {
-            this.moveTetrominoPointsToExistingPieces();
-            if (this.isLooser()) {
-                console.warn('>>>>>>>> mainLoop.LOOSER!!!');
-                clearInterval(this.intervalId)
-                return;
-            }
-            this.deleteFullRows();
-            this.chooseTetromino();
-        }
-        this.syncExistingPieces();
-    }
-
-    /**
-     * Metodo temportal
-     * que muestra estado del tablero
-     */
-    private tempLog(): void {
-        const board = this.existingPieces.map((row, y) => row.map((cell, x) => cell.taken ? `(${x},${y})` : null))
-        // eslint-disable-next-line no-console
-        console.table(board);
-    }
-
-    keyDownHandler(e: number): void {
+    private keyDownHandler(e: number): void {
         switch (e) {
             case 37:
                 this.moveLeft()
@@ -116,6 +93,29 @@ export class Game {
                 this.moveDown()
         }
         this.syncExistingPieces();
+    }
+
+    private mainLoop() {
+        if (!this.canPlay) return
+        if (this.tetrominoCanMoveDown()) {
+            this.globalY++
+            this.addScore(1)
+        } else {
+            if (this.isLooser()) {
+                console.warn('>>>>>>>> mainLoop.LOOSER!!!');
+                this.canPlay = false;
+                this.pauseGame();
+                return;
+            }
+            this.moveTetrominoPointsToExistingPieces();
+            this.deleteFullRows();
+            this.chooseTetromino();
+        }
+        this.syncExistingPieces();
+    }
+
+    private chooseTetromino(): void {
+        this.currentTetromino = TetrominoFactory.createRandom();
     }
 
     private isLooser(): boolean {
@@ -192,6 +192,7 @@ export class Game {
         this.existingPieces.map((row, y) => {
             const isFullRow = row.every(cell => cell.taken)
             if (isFullRow) {
+                this.canPlay = false
                 for (const cell of this.existingPieces[y]) {
                     cell.color = Config.deleteRowColor
                 }
@@ -199,15 +200,11 @@ export class Game {
                     this.existingPieces = this.existingPieces.filter(row => !row.every(cell => cell.taken))
                     this.existingPieces.unshift(Array(Config.cols).fill({ color: Config.emptyColor, taken: false }))
                     this.addScore(Config.scorePerSquare * Config.cols)
+                    this.canPlay = true
                     this.tempLog()
                 }, Config.timeDeleteRow);
             }
         })
-    }
-
-    private initGlobalPosition() {
-        this.globalX = Math.floor(Config.cols / 2) - 1;
-        this.globalY = 0;
     }
     
     private tetrominoCanMoveDown(): boolean {
@@ -245,13 +242,14 @@ export class Game {
         }
         this.initGlobalPosition();
     }
-    
-    private chooseTetromino() {
-        this.currentTetromino = this.getTetromino()
-    }
 
-    private getTetromino(): Tetromino {
-        return TetrominoFactory.createRandom();
+    /**
+     * Metodo temportal que muestra estado del tablero
+     */
+    private tempLog(): void {
+        const board = this.existingPieces.map((row, y) => row.map((cell, x) => cell.taken ? `(${x},${y})` : null))
+        // eslint-disable-next-line no-console
+        console.table(board);
     }
 
 }
