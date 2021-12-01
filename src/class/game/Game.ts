@@ -38,7 +38,7 @@ export class Game {
         const pauseLabel$ = document.querySelector('#pauseLabel') as HTMLLabelElement
         this.score$ = document.querySelector('#score') as HTMLSpanElement;
         document.addEventListener('keydown', (event) => {
-            if(event.keyCode === 13) {
+            if (event.keyCode === 13) {
                 this.canPlay = !this.canPlay
                 pauseLabel$.className = this.canPlay ? 'hidden' : 'paused'
                 this.canPlay ? this.startGame() : this.pauseGame()
@@ -60,7 +60,7 @@ export class Game {
         this.syncExistingPieces()
         this.canPlay = true
     }
-    
+
     private initGlobalPosition() {
         this.globalX = Math.floor(Config.cols / 2) - 1;
         this.globalY = 0;
@@ -76,6 +76,10 @@ export class Game {
 
     private addScore(n: number) {
         this.score$.textContent = `${parseInt(this.score$.textContent) + n}`
+    }
+
+    private chooseTetromino(): void {
+        this.currentTetromino = TetrominoFactory.createRandom();
     }
 
     private keyDownHandler(e: number): void {
@@ -112,10 +116,6 @@ export class Game {
             this.chooseTetromino();
         }
         this.syncExistingPieces();
-    }
-
-    private chooseTetromino(): void {
-        this.currentTetromino = TetrominoFactory.createRandom();
     }
 
     private isLooser(): boolean {
@@ -160,15 +160,45 @@ export class Game {
         }
     }
 
-    private syncExistingPieces(): void {
-        this.cleanBoardAndOverlapExistingPieces();
-        this.overlapCurrentTetrominoOnBoard()
+    private tetrominoCanMoveDown(): boolean {
+        const { currentTetromino } = this
+        if (!currentTetromino) return false
+        for (const point of currentTetromino.cells) {
+            const newPoint = new Cell(point.x, point.y + 1);
+            if (this.isOutOfBounds(newPoint) || this.isTaken(newPoint)) {
+                return false
+            }
+        }
+        return true
     }
 
-    private  overlapCurrentTetrominoOnBoard(): void {
+    private moveTetrominoPointsToExistingPieces() {
         for (const point of this.currentTetromino.cells) {
-            this.pieces[point.y + this.globalY][point.x + this.globalX].color = point.color as string;
+            point.x += this.globalX
+            point.y += this.globalY
+            this.existingPieces[point.y][point.x] = {
+                color: point.color as string,
+                taken: true
+            }
         }
+        this.initGlobalPosition();
+    }
+
+    private isTaken(point: ICell): boolean {
+        const absX = point.x + this.globalX
+        const absY = point.y + this.globalY
+        return this.existingPieces[absY][absX].taken
+    }
+
+    private isOutOfBounds(point: ICell): boolean {
+        const absX = point.x + this.globalX
+        const absY = point.y + this.globalY
+        return absX < 0 || absX >= Config.cols || absY < 0 || absY >= Config.rows
+    }
+
+    private syncExistingPieces(): void {
+        this.cleanBoardAndOverlapExistingPieces();
+        this.overlapCurrentTetrominoOnBoard();
     }
 
     private cleanBoardAndOverlapExistingPieces() {
@@ -182,6 +212,12 @@ export class Game {
                     this.pieces[y][x].color = this.existingPieces[y][x].color
                 }
             }
+        }
+    }
+
+    private overlapCurrentTetrominoOnBoard(): void {
+        for (const point of this.currentTetromino.cells) {
+            this.pieces[point.y + this.globalY][point.x + this.globalX].color = point.color as string;
         }
     }
 
@@ -205,42 +241,6 @@ export class Game {
                 }, Config.timeDeleteRow);
             }
         })
-    }
-    
-    private tetrominoCanMoveDown(): boolean {
-        const { currentTetromino } = this
-        if (!currentTetromino) return false
-        for (const point of currentTetromino.cells) {
-            const newPoint = new Cell(point.x, point.y + 1);
-            if (this.isOutOfBounds(newPoint) || this.isTaken(newPoint)) {
-                return false
-            }
-        }
-        return true
-    }
-
-    private isTaken(point: ICell): boolean {
-        const absX = point.x + this.globalX
-        const absY = point.y + this.globalY
-        return this.existingPieces[absY][absX].taken
-    }
-
-    private isOutOfBounds(point: ICell): boolean {
-        const absX = point.x + this.globalX
-        const absY = point.y + this.globalY
-        return absX < 0 || absX >= Config.cols || absY < 0 || absY >= Config.rows
-    }
-
-    private moveTetrominoPointsToExistingPieces() {
-        for (const point of this.currentTetromino.cells) {
-            point.x += this.globalX
-            point.y += this.globalY
-            this.existingPieces[point.y][point.x] = {
-                color: point.color as string,
-                taken: true
-            }
-        }
-        this.initGlobalPosition();
     }
 
     /**
