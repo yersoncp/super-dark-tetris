@@ -25,40 +25,41 @@ export class Game {
 
     public board!: Board;
 
-    constructor({ canvas }: { canvas: HTMLCanvasElement }) {
+    constructor(canvas: HTMLCanvasElement) {
         this.board = new Board(canvas)
-        this.globalX = 0;
-        this.globalY = 0;
-        this.score = 0;
-        this.canPlay = true;
         this.initControls()
-        this.resetGame()
+        this.initGame()
+        this.startGame()
     }
 
+    /**
+     * Inicializa los controles
+     */
     private initControls() {
+        const puaseLabel$ = document.querySelector('#pauseLabel') as HTMLLabelElement
         this.score$ = document.querySelector('#score') as HTMLSpanElement;
         document.addEventListener('keydown', (event) => {
             if(event.keyCode === 13) {
                 this.canPlay = !this.canPlay
-                document.querySelector('#pauseLabel').className = this.canPlay ? 'hidden' : 'paused'
-                if(this.canPlay) {
-                    this.pauseGame()
-                } else {
-                    this.startGame()
-                }
+                puaseLabel$.className = this.canPlay ? 'hidden' : 'paused'
+                this.canPlay ? this.startGame() : this.pauseGame()
             }
             if (!this.canPlay) return
             this.keyDownHandler(event.keyCode)
         })
     }
 
-    private resetGame() {
-        this.chooseTetromino()
+    /**
+     * Inicializa los valores por defecto del juego
+     */
+    private initGame() {
+        this.score = 0
+        this.score$.textContent = `${this.score}`
         this.pieces = this.board.pieces
         this.existingPieces = this.board.existingPieces
+        this.chooseTetromino()
         this.initGlobalPosition()
         this.syncExistingPieces()
-        this.startGame()
     }
 
     private pauseGame(): void {
@@ -66,6 +67,7 @@ export class Game {
     }
 
     private startGame(): void {
+        this.canPlay = true;
         this.intervalId = setInterval(this.mainLoop.bind(this), this.speed);
     }
 

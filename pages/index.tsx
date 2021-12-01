@@ -10,7 +10,8 @@ const Home: NextPage = () => {
   const [game, setGame] = useState<Game | null>(null)
 
   useEffect(() => {
-    const gameInstance = new Game({ canvas: canvasRef.current as HTMLCanvasElement })
+    const canvas = canvasRef.current as HTMLCanvasElement
+    const gameInstance = new Game(canvas)
     setGame(gameInstance)
   }, [])
 
