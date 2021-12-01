@@ -7,6 +7,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 Famoso juego de tetris usando NextJS y TypeScript. 😎 Desafío para practicar mis habilidades en React y algoritmos.
 
+![Tetris](./public/ScreenShot.png "Super dark tetris")
+
 ## Iniciar
 
 Instalar dependencias:
