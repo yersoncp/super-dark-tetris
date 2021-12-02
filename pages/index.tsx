@@ -34,7 +34,9 @@ const Home: NextPage = () => {
         <div className="board">
           <canvas ref={canvasRef}></canvas>
         </div>
-        <div className="by">Built by <span>Yerson</span></div>
+        <div className="by">
+          <a href="https://www.zurvin.com/">Make by Yerson</a>
+        </div>
       </div>
     </div>
   )

@@ -63,11 +63,8 @@ a {
 }
 
 .by {
-  color: #444;
+  color: #666;
   text-align: center;
   padding: 1rem;
-  font-size: 13px;
-}
-.by span {
-  color: #aaa;
+  font-size: 12px;
 }
