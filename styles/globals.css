@@ -61,3 +61,13 @@ a {
   font-size: 13px;
   text-transform: uppercase;
 }
+
+.by {
+  color: #444;
+  text-align: center;
+  padding: 1rem;
+  font-size: 13px;
+}
+.by span {
+  color: #aaa;
+}
