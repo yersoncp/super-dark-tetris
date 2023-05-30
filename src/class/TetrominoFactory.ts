@@ -1,5 +1,5 @@
-import { Utils } from "../../utils/Utils";
-import { Cell } from "../cell/Cell";
+import { Utils } from "../utils/Utils";
+import { Cell } from "./Cell";
 import { Tetromino } from "./Tetromino";
 
 export enum TetrominoType {

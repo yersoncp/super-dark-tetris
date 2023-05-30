@@ -1,4 +1,4 @@
-import { Cell } from "./Cell";
+import { Cell } from "../Cell";
 
 describe('Cell class unit tsting', () => {
     it('should create an instance', () => {

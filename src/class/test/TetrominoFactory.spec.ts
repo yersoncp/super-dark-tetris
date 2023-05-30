@@ -1,5 +1,5 @@
 import { Config } from "../../Config";
-import { TetrominoFactory, TetrominoType } from "./TetrominoFactory";
+import { TetrominoFactory, TetrominoType } from "../TetrominoFactory";
 
 describe('TetrominoFactory class', () => {
     const cellsCount = 4;

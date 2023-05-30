@@ -22,11 +22,6 @@ Iniciar entorno de desarrollo:
 npm run dev
 ```
 
-Ejecutar test unitario con Jest:
-```bash
-npm run test
-```
-
 Abrir [http://localhost:3000](http://localhost:3000) con tu navegador para ver el resultado.
 
 ## Demo

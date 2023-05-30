@@ -2,11 +2,10 @@ export class Config {
     static readonly emptyColor: string = '#202022'
     static readonly strokeColor: string = '#313136'
     static readonly deleteRowColor: string = '#B91C1C'
-    static readonly squareSize: number = 40
+    static readonly squareSize: number = 35
     static readonly cols: number = 8
     static readonly rows: number = 15
     static readonly speed: number = 800
-    static readonly speedDecrement: number = 50
     static readonly timeDeleteRow: number = 250
     static readonly widthSize: number = this.squareSize * this.cols
     static readonly heightSize: number = this.squareSize * this.rows

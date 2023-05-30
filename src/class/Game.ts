@@ -1,8 +1,8 @@
-import { Config } from "../../Config";
-import { Board } from "../board/Board";
-import { ICell, Cell } from "../cell/Cell";
-import { Tetromino } from "../tetramino/Tetromino";
-import { TetrominoFactory } from "../tetramino/TetrominoFactory";
+import { Config } from "../Config";
+import { Board } from "./Board";
+import { ICell, Cell } from "./Cell";
+import { Tetromino } from "./Tetromino";
+import { TetrominoFactory } from "./TetrominoFactory";
 
 type Piece = {
     color: string;

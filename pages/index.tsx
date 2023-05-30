@@ -1,10 +1,9 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import {useEffect, useRef, useState } from 'react'
-import { Game } from '../src/class/game/Game'
+import { useEffect, useRef, useState } from 'react'
+import Layout from '../src/components/Layout/Layout'
+import { Game } from '../src/class/Game'
 
 const Home: NextPage = () => {
-
   const canvasRef = useRef<HTMLCanvasElement>(null)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [game, setGame] = useState<Game | null>(null)
@@ -16,29 +15,19 @@ const Home: NextPage = () => {
   }, [])
 
   return (
-    <div className="layout">
-      <Head>
-        <title>Tetris</title>
-        <meta name="description" content="Juego realizado con NextJS y TypeScript" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <Layout>
 
-      <div>
-        <div className="controls">
-          <label className="scoreLabel">
-              <span className="text">Puntos: </span>
-              <span id="score">0</span>
-          </label>
-          <label id="pauseLabel" className="hidden">PAUSED</label>
-        </div>
-        <div className="board">
-          <canvas ref={canvasRef}></canvas>
-        </div>
-        <div className="by">
-          <a href="https://www.zurvin.com/">Make by Yerson</a>
-        </div>
+      <div className="controls">
+        <label className="scoreLabel">
+          <span className="text">SCORE: </span>
+          <span id="score">0</span>
+        </label>
+        <label id="pauseLabel" className="hidden">PAUSED</label>
       </div>
-    </div>
+      
+      <canvas ref={canvasRef}></canvas>
+
+    </Layout>
   )
 }
 

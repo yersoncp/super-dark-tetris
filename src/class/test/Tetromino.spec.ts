@@ -1,5 +1,5 @@
-import { Cell } from "../cell/Cell";
-import { Tetromino } from "./Tetromino";
+import { Cell } from "../Cell";
+import { Tetromino } from "../Tetromino";
 
 describe('Tetromino class', () => {
     
