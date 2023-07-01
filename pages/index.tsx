@@ -17,6 +17,10 @@ const Home: NextPage = () => {
   return (
     <Layout>
 
+      <span style={{ color: "#666", paddingBottom: "1rem", display: "block", fontSize: "13px"}}>
+        Press enter to pause the game
+      </span>
+
       <div className="controls">
         <label className="scoreLabel">
           <span className="text">SCORE: </span>
@@ -26,7 +30,6 @@ const Home: NextPage = () => {
       </div>
       
       <canvas ref={canvasRef}></canvas>
-
     </Layout>
   )
 }
