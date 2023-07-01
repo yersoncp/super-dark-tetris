@@ -36,9 +36,9 @@ export class TetrominoFactory {
           [new Cell(0, 0), new Cell(0, 1), new Cell(0, 2), new Cell(1, 2)],
           [new Cell(0, 1), new Cell(1, 1), new Cell(2, 0), new Cell(2, 1)],
           [new Cell(0, 0), new Cell(1, 0), new Cell(1, 1), new Cell(1, 2)],
-          [new Cell(0, 0), new Cell(0, 1), new Cell(1, 0), new Cell(2, 0)], 
+          [new Cell(0, 0), new Cell(0, 1), new Cell(1, 0), new Cell(2, 0)],
         ]);
-        case TetrominoType.L:
+      case TetrominoType.L:
         return new Tetromino([
           [new Cell(0, 0), new Cell(1, 0), new Cell(2, 0), new Cell(2, 1)],
           [new Cell(0, 0), new Cell(0, 1), new Cell(0, 2), new Cell(1, 0)],
